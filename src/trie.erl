@@ -42,9 +42,4 @@ contains(<<Byte, Rest/binary>>, Trie) ->
 
 -spec advance(byte(), trie_node()) -> undefined | trie_node().
 advance(Byte, #trie_node{ children = M }) ->
-    try
-        maps:get(Byte, M)
-    catch
-        error:{badkey, _}:_Stacktrace ->
-            undefined
-    end.
+    maps:get(Byte, M, undefined).

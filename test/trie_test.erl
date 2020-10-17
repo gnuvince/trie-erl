@@ -9,6 +9,15 @@ new_test() ->
         children = #{}
     }).
 
+from_list_test() ->
+    Trie = trie:from_list([<<"foo">>, <<"bar">>, <<"baz">>, <<"fo">>]),
+    ?assert(trie:contains(<<"foo">>, Trie)),
+    ?assert(trie:contains(<<"fo">>, Trie)),
+    ?assert(trie:contains(<<"bar">>, Trie)),
+    ?assert(trie:contains(<<"baz">>, Trie)),
+    ?assertNot(trie:contains(<<"f">>, Trie)),
+    ?assertNot(trie:contains(<<"fooo">>, Trie)).
+
 insert_contains_test() ->
     Trie = lists:foldl(fun(Entry, Acc) ->
             trie:insert(Entry, Acc)

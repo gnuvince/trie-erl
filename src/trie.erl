@@ -4,6 +4,7 @@
 
 -export([
     new/0,
+    from_list/1,
     insert/2,
     contains/2,
     advance/2
@@ -26,6 +27,11 @@ insert(<<Byte, Rest/binary>>, #trie_node{ children = M } = Trie) ->
     Trie#trie_node{
         children = maps:put(Byte, insert(Rest, ChildTrie), M)
     }.
+
+
+-spec from_list([binary()]) -> trie_node().
+from_list(Bins) ->
+    lists:foldl(fun insert/2, new(), Bins).
 
 
 -spec contains(binary(), trie_node()) -> boolean().
